@@ -26,10 +26,11 @@ export default function Navbar() {
 
                 {/* DESKTOP MENU */}
                 <div className="hidden md:flex gap-8 text-lg">
-                    <Link href="/" className="hover:text-[#C5A550]">Home</Link>
-                    <Link href="/product" className="hover:text-[#C5A550]">Products</Link>
-                    <Link href="/about" className="hover:text-[#C5A550]">About</Link>
-                    <Link href="/contact" className="hover:text-[#C5A550]">Contact</Link>
+                    <Link href="/" className="hover:text-[#E5C082]">Home</Link>
+                    <Link href="/Blog" className="hover:text-[#E5C082]">Blog</Link>
+                    <Link href="/Shop" className="hover:text-[#E5C082]">Shop</Link>
+                    <Link href="/About" className="hover:text-[#E5C082]">About</Link>
+                    <Link href="/contact" className="hover:text-[#E5C082]">Contact</Link>
                 </div>
 
                 {/* MOBILE TOGGLE BUTTON */}
@@ -44,11 +45,12 @@ export default function Navbar() {
 
             {/* MOBILE MENU */}
             {open && (
-                <div className="md:hidden bg-brown p-4 flex flex-col gap-4 text-lg text-center">
-                    <Link href="/" className="hover:text-[#C5A550]" onClick={() => setOpen(false)}>Home</Link>
-                    <Link href="/product" className="hover:text-[#C5A550]" onClick={() => setOpen(false)}>Products</Link>
-                    <Link href="/about" className="hover:text-[#C5A550]" onClick={() => setOpen(false)}>About</Link>
-                    <Link href="/contact" className="hover:text-[#C5A550]" onClick={() => setOpen(false)}>Contact</Link>
+                <div className="md:hidden bg-brown p-4 flex flex-col gap-4 text-2xl text-center">
+                    <Link href="/" className="hover:text-[#E5C082]" onClick={() => setOpen(false)}>Home</Link>
+                    <Link href="/Blog" className="hover:text-[#E5C082]" onClick={() => setOpen(false)}>Blog</Link>
+                    <Link href="/Shop" className="hover:text-[#E5C082]" onClick={() => setOpen(false)}>Shop</Link>
+                    <Link href="/about" className="hover:text-[#E5C082]" onClick={() => setOpen(false)}>About</Link>
+                    <Link href="/contact" className="hover:text-[#E5C082]" onClick={() => setOpen(false)}>Contact</Link>
                 </div>
             )}
         </nav>

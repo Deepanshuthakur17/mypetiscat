@@ -5,35 +5,31 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function Catweek() {
-    // Animation variants for the whole container (staggering the children)
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: { 
             opacity: 1, 
             transition: { 
-                staggerChildren: 0.15, // Stagger children for sequential appearance
+                staggerChildren: 0.15,
             } 
         }
     };
 
-    // Animation variants for the individual text and image blocks
     const itemVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
     };
 
     return (
-        // Apply container motion to the outermost div
         <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }} // Trigger when 40% of the component is visible
+            viewport={{ once: true, amount: 0.4 }}
             variants={containerVariants}
             className="bg-linear-to-br from-primary/10 via-secondary/10 to-accent/10 rounded-3xl p-8 md:p-12 shadow-lg"
         >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 
-                {/* Text Content - apply item motion for smooth entry */}
                 <motion.div 
                     variants={itemVariants}
                     className="border-2 border-[#E5C082] rounded-2xl text-center pt-2"

@@ -39,14 +39,14 @@ export default function Hero() {
                 className="container py-16 md:py-24"
             >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    
+
                     {/* Left Column (Text Content) */}
-                    <motion.div 
+                    <motion.div
                         variants={textVariants}
-                        // Removed the static 'animate-fade-in' class as Framer Motion takes over
+                        className="text-center lg:text-left"
                     >
                         {/* Tagline Badge */}
-                        <div className="inline-flex items-center ml-10 lg:ml-0 gap-2 px-4 py-2 rounded-full bg-[#E5C082] text-[#000000] text-sm font-bold mb-6 shadow-sm shadow-[#E5C082]">
+                        <div className="inline-flex items-center mx-auto lg:mx-0 gap-2 px-4 py-2 rounded-full bg-[#E5C082] text-[#000000] text-sm font-bold mb-6 shadow-sm shadow-[#E5C082]">
                             {/* Sparkles SVG Icon */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-sparkles h-4 w-4">
                                 <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
@@ -59,16 +59,16 @@ export default function Hero() {
                         </div>
 
                         {/* Headline */}
-                        <h1 className="text-4xl md:text-6xl ml-18 lg:ml-0 font-bold mb-6 leading-tight text-[#E5C082]">My Pet Is Cat 🐾</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-[#E5C082]">My Pet Is Cat 🐾</h1>
 
                         {/* Subtext */}
-                        <p className="text-lg md:text-xl text-muted-foreground mb-6 max-w-lg">Your daily dose of adorable cat moments, expert care tips, funny stories, and the best cat products—all in one purr-fect place!</p>
+                        <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0">Your daily dose of adorable cat moments, expert care tips, funny stories, and the best cat products—all in one purr-fect place!</p>
 
                         {/* Actions */}
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                             {/* Explore Stories Link */}
                             <Link
-                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 bg-[#F28B69] text-[#000000] hover:bg-[#c77a60e2] h-11 px-8 rounded-full"
+                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 bg-[#F28B69] text-[#000000] hover:bg-[#c77a60e2] h-11 px-8 rounded-full shadow-md hover:shadow-lg duration-200"
                                 href="/blog"
                             >
                                 Explore Stories
@@ -79,7 +79,7 @@ export default function Hero() {
                                 </svg>
                             </Link>
                             <Link
-                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 border border-input bg-background hover:bg-[#E5C082] hover:text-[#000000] h-11 px-8 rounded-full"
+                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0 border border-input text-white hover:bg-[#E5C082] hover:text-[#000000] h-11 px-8 rounded-full duration-200"
                                 href="/shop"
                             >
                                 Shop Cat Goodies
@@ -88,12 +88,11 @@ export default function Hero() {
                     </motion.div>
 
                     {/* Right Column (Hero Image) */}
-                    <motion.div 
+                    <motion.div
                         variants={imageVariants}
-                        // Removed the static 'animate-slide-up' class
+                        className="mt-10 lg:mt-0"
                     >
-                        <div className="rounded-3xl overflow-hidden shadow-2xl">
-                            {/* Next.js Image component for optimization */}
+                        <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#E5C082]">
                             <Image
                                 src="/hero-cat-BBnHaAkR.jpg"
                                 alt="Adorable cat"

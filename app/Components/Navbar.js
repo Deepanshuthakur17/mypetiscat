@@ -26,7 +26,7 @@ export default function Navbar() {
 
                 {/* DESKTOP MENU */}
                 <div className="hidden md:flex gap-8 text-lg">
-                    <Link href="/" className="hover:text-[c]">Home</Link>
+                    <Link href="/" className="hover:text-[#E5C082]">Home</Link>
                     <Link href="/Blog" className="hover:text-[#E5C082]">Blog</Link>
                     <Link href="/Shop" className="hover:text-[#E5C082]">Shop</Link>
                     <Link href="/About" className="hover:text-[#E5C082]">About</Link>

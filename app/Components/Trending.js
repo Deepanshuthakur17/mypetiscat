@@ -73,7 +73,7 @@ const itemVariants = {
 
 export default function Trending() {
     return (
-        <section className="container py-12">
+        <section className="container py-5">
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#E5C082]">Trending Cat Moments 🔥</h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto font-bold">The most heartwarming, hilarious, and viral cat stories from around the web</p>

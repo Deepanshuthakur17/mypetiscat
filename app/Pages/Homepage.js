@@ -6,6 +6,7 @@ import Trending from '../Components/Trending'
 import Catweek from '../Components/Catweek'
 import Social from '../Components/Social'
 import Footer from '../Components/Footer'
+import Shorts from '../Components/Shorts'
 
 function Homepage() {
   return (
@@ -15,6 +16,7 @@ function Homepage() {
         <section>
           <Hero />
           <AdSpace />
+          <Shorts/>
           <Trending />
           <Catweek/>
           <AdSpace />

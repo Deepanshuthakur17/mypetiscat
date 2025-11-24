@@ -29,7 +29,7 @@ export default function Hero() {
     };
     
     return (
-        <section className="flex flex-col min-h-screen items-center justify-center bg-black font-serif dark:bg-black">
+        <section className="flex flex-col min-h-screen items-center mt-5 lg:mt-0 justify-center bg-black font-serif dark:bg-black">
             {/* Apply motion to the container that holds the two columns */}
             <motion.div 
                 initial="hidden"
@@ -92,7 +92,7 @@ export default function Hero() {
                         variants={imageVariants}
                         className="mt-10 lg:mt-0"
                     >
-                        <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#E5C082]">
+                        <div className="rounded-3xl -mt-8 lg:-mt-0 overflow-hidden shadow-2xl border-4 border-[#E5C082]">
                             <Image
                                 src="/hero-cat-BBnHaAkR.jpg"
                                 alt="Adorable cat"

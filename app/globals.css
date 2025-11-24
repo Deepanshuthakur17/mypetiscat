@@ -24,3 +24,29 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 1. Hides scrollbar on ALL screens (Used for VideoModal) */
+.scrollbar-hide {
+  /* For Firefox */
+  scrollbar-width: none;
+  /* For IE and Edge */
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  /* For Chrome, Safari, and Opera */
+  display: none;
+}
+
+/* 2. Hides scrollbar ONLY on MD+ screens (Used for Horizontal Preview List) */
+@media (min-width: 768px) {
+  .md\:scrollbar-hide {
+    /* For Firefox */
+    scrollbar-width: none;
+    /* For IE and Edge */
+    -ms-overflow-style: none;
+  }
+  .md\:scrollbar-hide::-webkit-scrollbar {
+    /* For Chrome, Safari, and Opera */
+    display: none;
+  }
+}

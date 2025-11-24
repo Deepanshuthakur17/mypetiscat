@@ -92,9 +92,9 @@ export default function Hero() {
                         variants={imageVariants}
                         className="mt-10 lg:mt-0"
                     >
-                        <div className="rounded-3xl -mt-8 lg:-mt-0 overflow-hidden shadow-2xl border-4 border-[#E5C082]">
+                        <div className="rounded-3xl shadow-[#E5C082] -mt-8 lg:-mt-0 overflow-hidden shadow-2xl border-4 border-[#E5C082]">
                             <Image
-                                src="/hero-cat-BBnHaAkR.jpg"
+                                src="/QueenHero.jpeg"
                                 alt="Adorable cat"
                                 width={1000}
                                 height={700}

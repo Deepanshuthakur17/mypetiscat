@@ -96,7 +96,7 @@ export default function Footer() {
                     <h3 className="text-xl text-[#C5A550] font-bold mb-2">Quick Links</h3>
                     <ul className="flex justify-center items-center gap-4 lg:gap-6 pt-2 lg:pt-4 lg:mr-14">
                         <Link href="/" className="hover:text-[#C5A550] transition-colors"><Home className="ml-2"/>Home</Link>
-                        <Link href="/Blog" className="hover:text-[#C5A550] transition-colors"><BoldIcon className="ml-2"/> Blog</Link>
+                        <Link href="/blog" className="hover:text-[#C5A550] transition-colors"><BoldIcon className="ml-2"/> Blog</Link>
                         <Link href="/Shop" className="hover:text-[#C5A550] transition-colors"><ShoppingCart className="ml-2"/> Shop</Link>
                         <Link href="/About" className="hover:text-[#C5A550] transition-colors"><ArrowBigUpDash className="ml-2"/> About Us</Link>
                         <Link href="/Contact" className="hover:text-[#C5A550] transition-colors"> <ContactRound className="ml-2"/> Contact</Link>

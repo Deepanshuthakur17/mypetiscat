@@ -123,7 +123,7 @@ my-pet-is-cat/
     The goal of this project is to strengthen frontend development skills,
     demonstrate Next.js fundamentals, and build a real-world deployable application
     suitable for internships and professional portfolios.
-And showcase my Pet YouTube channel by making cat platform. [It's incompleted now more work added]
+And showcase my Pet YouTube channel by making cat platform. [It's incompleted now more work added sum times later.]
   </p>
 
   <hr />

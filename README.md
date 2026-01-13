@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Pet Is Cat – README</title>
 </head>
 <body>
 
@@ -130,7 +129,7 @@ my-pet-is-cat/
 
   <h2>👤 Author</h2>
   <p>
-    <strong>Developer:</strong> Your Name<br />
+    <strong>Developer:</strong> Deepanshu Thakur<br />
     <strong>Project:</strong> My Pet Is Cat<br />
     <strong>Live URL:</strong>
     <a href="https://mypetiscat.vercel.app/" target="_blank">

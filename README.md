@@ -85,7 +85,7 @@ my-pet-is-cat/
   <ol>
     <li>
       Clone the repository:
-      <pre>git clone https://github.com/your-username/my-pet-is-cat.git</pre>
+      <pre>git clone https://github.com/Deepanshuthakur17/my-pet-is-cat.git</pre>
     </li>
     <li>
       Navigate to the project directory:

@@ -1,23 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, Home, ThumbsUp, Share2, ChevronUp, ChevronDown, Grid, List } from 'lucide-react';
+import { 
+    X, Home, ThumbsUp, Share2, ChevronUp, ChevronDown, 
+    Grid, List, Sparkles, Heart, Laugh, Crown 
+} from 'lucide-react';
 
 // --- STATIC DATA FOR SHORTS ---
 const catShorts = [
-    { id: 1, youtubeId: 'YwGAPdgeUvg', title: 'Cat in a Red Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
-    { id: 2, youtubeId: '6L2yi6uBheg', title: 'Cat is Flexing Their Luxury Jewellery 💎🐱 | Rich Cat Vibes 😎 #Shorts #MyPetIsCat' },
-    { id: 3, youtubeId: '7mRROgcNU7A', title: 'Cat in a Orange Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
-    { id: 4, youtubeId: 'LrzJpAxqkwQ', title: 'Cat in Black 😎 | The Coolest Fashion Icon Ever! | #Shorts #MyPetIsCat' },
-    { id: 5, youtubeId: 'U8bgxbEceeI', title: 'Rich Boss Cat vs Normal Cat | Funny Cat Attitude 😎🐈💸 #Shorts #MyPetIsCat' },
-    { id: 6, youtubeId: 'UdK0kulFKdk', title: 'Cat in a Green Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
-    { id: 7, youtubeId: '4Pdou41L7jc', title: 'Here The Real 👑 Queen | Royal Cat Attitude 💅🐱 | #Shorts #MyPetIsCat' },
-    { id: 8, youtubeId: 'pt72uSBpvLY', title: 'Coolest Cat on Earth 😎 | Too Stylish to Handle! | #Shorts #MyPetIsCat' },
-    { id: 9, youtubeId: 'xUXAeCwnIM4', title: 'When luxury meets cattitude 💅🐱#Shorts #MyPetIsCat' },
-    { id: 10, youtubeId: 'OcyBVPDg1BE', title: '​G-WAGON Cat BOSS 💰 Drives Better Than You! 😂 #RichCat' },
+    { id: 1, youtubeId: 'YwGAPdgeUvg', category: 'Viral Cats', title: 'Cat in a Red Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
+    { id: 2, youtubeId: '6L2yi6uBheg', category: 'Rich Cats', title: 'Cat is Flexing Their Luxury Jewellery 💎🐱 | Rich Cat Vibes 😎 #Shorts #MyPetIsCat' },
+    { id: 3, youtubeId: '7mRROgcNU7A', category: 'Viral Cats', title: 'Cat in a Orange Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
+    { id: 4, youtubeId: 'LrzJpAxqkwQ', category: 'Viral Cats', title: 'Cat in Black 😎 | The Coolest Fashion Icon Ever! | #Shorts #MyPetIsCat' },
+    { id: 5, youtubeId: 'U8bgxbEceeI', category: 'Rich Cats', title: 'Rich Boss Cat vs Normal Cat | Funny Cat Attitude 😎🐈💸 #Shorts #MyPetIsCat' },
+    { id: 6, youtubeId: 'UdK0kulFKdk', category: 'Viral Cats', title: 'Cat in a Green Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
+    { id: 7, youtubeId: '4Pdou41L7jc', category: 'Rich Cats', title: 'Here The Real 👑 Queen | Royal Cat Attitude 💅🐱 | #Shorts #MyPetIsCat' },
+    { id: 8, youtubeId: 'pt72uSBpvLY', category: 'Funny Cats', title: 'Coolest Cat on Earth 😎 | Too Stylish to Handle! | #Shorts #MyPetIsCat' },
+    { id: 9, youtubeId: 'xUXAeCwnIM4', category: 'Rich Cats', title: 'When luxury meets cattitude 💅🐱#Shorts #MyPetIsCat' },
+    { id: 10, youtubeId: 'OcyBVPDg1BE', category: 'Rich Cats', title: '​G-WAGON Cat BOSS 💰 Drives Better Than You! 😂 #RichCat' },
+];
+
+const categories = [
+    { name: "All", icon: Sparkles },
+    { name: "Viral Cats", icon: Heart },
+    { name: "Funny Cats", icon: Laugh },
+    { name: "Cat Care", icon: List },
+    { name: "Rich Cats", icon: Crown },
 ];
 
 /**
@@ -35,21 +46,16 @@ const ShortsActionButton = ({ icon: Icon, label, onClick }) => (
 
 
 // ---------------------------------------------------------------------
-//                            VIDEO MODAL
+//                             VIDEO MODAL
 // ---------------------------------------------------------------------
 
-/**
- * 🎬 Full-screen Video Modal Component (The 'Big Screen' View)
- */
 function VideoModal({ shorts, selectedId, onClose }) {
-    // ... (Modal logic remains unchanged)
     const initialIndex = shorts.findIndex(short => short.youtubeId === selectedId);
     const [currentIndex, setCurrentIndex] = useState(initialIndex > -1 ? initialIndex : 0);
     const currentShort = shorts[currentIndex];
     const scrollRef = useRef(null);
     const [showLikeAlert, setShowLikeAlert] = useState(false);
 
-    // --- NAVIGATION LOGIC ---
     const totalShorts = shorts.length;
     const isFirstVideo = currentIndex === 0;
     const isLastVideo = currentIndex === totalShorts - 1;
@@ -83,6 +89,7 @@ function VideoModal({ shorts, selectedId, onClose }) {
     }, [currentIndex, isFirstVideo]);
 
     const handleLikeClick = () => {
+        new Audio('/cat-meow-For-Like-button.mp3').play().catch(() => {});
         setShowLikeAlert(true);
     };
 
@@ -93,142 +100,56 @@ function VideoModal({ shorts, selectedId, onClose }) {
             .catch(() => alert('Could not copy link.'));
     };
 
-    // Keyboard navigation (ArrowUp/ArrowDown/Escape)
     useEffect(() => {
         const handleKeyPress = (e) => {
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                goToNextVideo();
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                goToPrevVideo();
-            } else if (e.key === 'Escape') {
-                if (showLikeAlert) {
-                    setShowLikeAlert(false);
-                } else {
-                    onClose();
-                }
-            }
+            if (e.key === 'ArrowDown') { e.preventDefault(); goToNextVideo(); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); goToPrevVideo(); }
+            else if (e.key === 'Escape') { if (showLikeAlert) { setShowLikeAlert(false); } else { onClose(); } }
         };
-
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [goToNextVideo, goToPrevVideo, onClose, showLikeAlert]);
 
-    // Auto-scroll on mount
     useEffect(() => {
         if (scrollRef.current) {
             const videoHeight = scrollRef.current.clientHeight;
-            scrollRef.current.scrollTo({
-                top: initialIndex * videoHeight,
-                behavior: 'auto',
-            });
+            scrollRef.current.scrollTo({ top: initialIndex * videoHeight, behavior: 'auto' });
         }
     }, [initialIndex]);
 
-    // Handle scroll snapping
     const handleScroll = (e) => {
         const container = e.currentTarget;
         const scrollPosition = container.scrollTop;
         const videoHeight = container.clientHeight;
         const newIndex = Math.round(scrollPosition / videoHeight);
-
         if (newIndex !== currentIndex) {
             setCurrentIndex(newIndex);
             setShowLikeAlert(false);
         }
     };
 
-
     if (!currentShort) return null;
-
-    // Positioning for the Up/Down arrows relative to the central video frame
-    const navArrowOffset = '230px';
-    const navGap = '110px';
     const videoUrl = `https://www.youtube.com/watch?v=${currentShort.youtubeId}`;
 
-
     return (
-        <motion.div
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-        >
-            {/* --- TOP-LEFT EXIT BUTTON (Always visible for Back to Home) --- */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 left-4 z-50 text-white p-2 rounded-full bg-gray-900/70 hover:bg-gray-700 transition-colors"
-                aria-label="Close Video Player and Go Home"
-            >
-                <X size={40} />
-            </button>
+        <motion.div className="fixed inset-0 z-50 bg-black flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <button onClick={onClose} className="absolute top-4 left-4 z-50 text-white p-2 rounded-full bg-gray-900/70 hover:bg-gray-700 transition-colors"><X size={40} /></button>
+            
+            <button onClick={goToPrevVideo} disabled={isFirstVideo} style={{ right: `calc(50% - 230px)`, top: `calc(50% - 110px)` }} className={`absolute z-50 text-white p-3 rounded-full bg-gray-900/70 transition-opacity md:flex hidden ${isFirstVideo ? 'opacity-30' : 'hover:bg-gray-700'}`}><ChevronUp size={30} /></button>
 
-            {/* --- PREVIOUS VIDEO BUTTON (UP) - Desktop Only, Outside Video Frame --- */}
-            <button
-                onClick={goToPrevVideo}
-                disabled={isFirstVideo}
-                style={{ right: `calc(50% - ${navArrowOffset})`, top: `calc(50% - ${navGap})` }}
-                className={`absolute z-50 text-white p-3 rounded-full 
-                            bg-gray-900/70 transition-opacity md:flex hidden
-                            ${isFirstVideo ? 'opacity-30 cursor-not-allowed' : 'hover:bg-gray-700'}`}
-                aria-label="Previous Video"
-            >
-                <ChevronUp size={30} />
-            </button>
-
-
-            {/* --- SCROLLABLE VIDEO CONTAINER (Max 400px width) --- */}
-            <div
-                ref={scrollRef}
-                // Hidden on ALL screens
-                className="w-full h-full max-w-[400px] overflow-y-scroll snap-y snap-mandatory relative scrollbar-hide"
-                onScroll={handleScroll}
-            >
+            <div ref={scrollRef} className="w-full h-full max-w-[400px] overflow-y-scroll snap-y snap-mandatory relative scrollbar-hide" onScroll={handleScroll}>
                 {shorts.map((short, index) => {
-                    const shouldLoad = index >= currentIndex - 1 && index <= currentIndex + 1;
                     const isCurrent = index === currentIndex;
-
-                    // All videos in the modal should loop
-                    const embedUrl = `https://www.youtube.com/embed/${short.youtubeId}?controls=${isCurrent ? 1 : 0}&autoplay=${isCurrent ? 1 : 0}&mute=${isCurrent ? 0 : 1}&modestbranding=1&loop=1&playlist=${short.youtubeId}`;
-
+                    const embedUrl = `https://www.youtube.com/embed/${short.youtubeId}?controls=${isCurrent ? 1 : 0}&autoplay=${isCurrent ? 1 : 0}&mute=${isCurrent ? 0 : 1}&modestbranding=1&loop=1&playlist=${short.youtubeId}&playsinline=1`;
                     return (
-                        <div
-                            key={short.id}
-                            className="w-full h-full shrink-0 snap-start relative bg-gray-900"
-                        >
-                            {shouldLoad ? (
-                                <iframe
-                                    src={embedUrl}
-                                    title={short.title}
-                                    frameBorder="0"
-                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-white">
-                                    <p>Loading next video...</p>
-                                </div>
+                        <div key={short.id} className="w-full h-full shrink-0 snap-start relative bg-gray-900">
+                            {index >= currentIndex - 1 && index <= currentIndex + 1 && (
+                                <iframe src={embedUrl} title={short.title} frameBorder="0" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full" allowFullScreen />
                             )}
-
-                            {/* --- ACTION BUTTONS (Right Side) --- */}
                             {isCurrent && (
                                 <div className="absolute bottom-5 right-3 p-2 z-10 flex flex-col space-y-8 top-80">
-                                    {/* Like Button with Pop-up Handler */}
-                                    <ShortsActionButton
-                                        icon={ThumbsUp}
-                                        label="Like"
-                                        onClick={handleLikeClick}
-                                    />
-
-                                    {/* Share Button with functionality */}
-                                    <ShortsActionButton
-                                        icon={Share2}
-                                        label="Share"
-                                        onClick={handleShareClick}
-                                    />
+                                    <ShortsActionButton icon={ThumbsUp} label="Like" onClick={handleLikeClick} />
+                                    <ShortsActionButton icon={Share2} label="Share" onClick={handleShareClick} />
                                 </div>
                             )}
                         </div>
@@ -236,268 +157,142 @@ function VideoModal({ shorts, selectedId, onClose }) {
                 })}
             </div>
 
-            {/* --- NEXT VIDEO BUTTON (DOWN) - Desktop Only, Outside Video Frame --- */}
-            <button
-                onClick={goToNextVideo}
-                disabled={isLastVideo}
-                style={{ right: `calc(50% - ${navArrowOffset})`, top: `calc(50% + 5px)` }}
-                className={`absolute z-50 text-white p-3 cursor-pointer rounded-full 
-                            bg-gray-900/70 transition-opacity md:flex hidden
-                            ${isLastVideo ? 'opacity-30 cursor-not-allowed' : 'hover:bg-gray-700'}`}
-                aria-label="Next Video"
-            >
-                <ChevronDown size={30} />
-            </button>
+            <button onClick={goToNextVideo} disabled={isLastVideo} style={{ right: `calc(50% - 230px)`, top: `calc(50% + 5px)` }} className={`absolute z-50 text-white p-3 rounded-full bg-gray-900/70 transition-opacity md:flex hidden ${isLastVideo ? 'opacity-30' : 'hover:bg-gray-700'}`}><ChevronDown size={30} /></button>
 
-
-            {/* --- LIKE POP-UP / MODAL --- */}
             <AnimatePresence>
                 {showLikeAlert && (
-                    <motion.div
-                        className="absolute z-50 p-6 bg-[#000000] rounded-lg shadow-2xl max-w-xs text-center mx-auto"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                    >
+                    <motion.div className="absolute z-50 p-6 bg-[#000000] rounded-lg shadow-2xl max-w-xs text-center mx-auto" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}>
                         <h3 className="text-2xl font-bold text-[#E5C082] mb-4">Support the Creator!</h3>
-                        <p className="text-sm text-gray-600 mb-6">
-                            To **Like**, **Subscribe**, or **Comment**, please visit the video directly on YouTube.
-                        </p>
-                        <a href="https://youtube.com/@my_pet_is_cat?si=EbXLkg067jj33Oy9" target="_blank" rel="noopener noreferrer">
-                            <Image
-                                src="/Logo.png"
-                                alt="Company Logo"
-                                width={200}
-                                height={80}
-                                className="h-16 w-auto ml-25 -mt-5"
-                                loading="eager"
-                            /></a>
-                        <a
-                            href={videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setShowLikeAlert(false)}
-                            className="block w-full py-2 mt-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition-colors"
-                        >
-                            Go to YouTube
-                        </a>
-                        <button
-                            onClick={() => setShowLikeAlert(false)}
-                            className="mt-3 text-sm border-2 border-[#E5C082] rounded-full w-15 cursor-pointer font-bold text-gray-600 hover:text-[#000000] hover:bg-[#E5C082]"
-                        >
-                            Close
-                        </button>
+                        <p className="text-sm text-gray-600 mb-6">To **Like**, **Subscribe**, or **Comment**, please visit the video directly on YouTube.</p>
+                        <a href="https://youtube.com/@my_pet_is_cat?si=EbXLkg067jj33Oy9" target="_blank" rel="noopener noreferrer"><Image src="/Logo.png" alt="Logo" width={200} height={80} className="h-16 w-auto ml-25 -mt-5" loading="eager" /></a>
+                        <a href={videoUrl} target="_blank" rel="noopener noreferrer" className="block w-full py-2 mt-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition-colors text-center">Go to YouTube</a>
+                        <button onClick={() => setShowLikeAlert(false)} className="mt-3 text-sm border-2 border-[#E5C082] rounded-full w-15 cursor-pointer font-bold text-gray-600 hover:text-[#000000] hover:bg-[#E5C082]">Close</button>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-
-            {/* --- HOME BUTTON ON WIDER SCREENS (OUTSIDE THE VIDEO FRAME) --- */}
-            <button
-                onClick={onClose}
-                className="absolute top-5 right-4 mr-15 cursor-pointer hover:text-[#E5C082] z-50 text-white p-2 rounded-full bg-gray-900/70 hover:bg-gray-700 transition-colors hidden sm:block"
-                aria-label="Back to Home"
-            >
-                <Home size={40} className="ml-1"/>
-                <span className="font-bold">Home</span>
+            <button onClick={onClose} className="absolute top-5 right-4 mr-15 cursor-pointer hover:text-[#E5C082] z-50 text-white p-2 rounded-full bg-gray-900/70 hover:bg-gray-700 transition-colors hidden sm:block">
+                <Home size={40} className="ml-1"/><span className="font-bold">Home</span>
             </button>
-
         </motion.div>
     );
 }
 
 // ---------------------------------------------------------------------
-//                        MAIN SHORTS COMPONENT
+//                         MAIN SHORTS COMPONENT
 // ---------------------------------------------------------------------
 
-/**
- * 🏠 Main Shorts Component (The Initial Preview List) 
- */
 export default function Shorts() {
-    // New state to control the view mode: 'preview' (horizontal) or 'grid' (all videos)
     const [viewMode, setViewMode] = useState('preview');
     const [selectedVideoId, setSelectedVideoId] = useState(null);
     const [hoveredId, setHoveredId] = useState(null);
+    const [activeCategory, setActiveCategory] = useState("All");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-    const openVideo = (youtubeId) => {
-        setSelectedVideoId(youtubeId);
-    };
+    const openVideo = (youtubeId) => setSelectedVideoId(youtubeId);
+    const closeVideo = () => setSelectedVideoId(null);
 
-    const closeVideo = () => {
-        setSelectedVideoId(null);
-    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setIsDropdownOpen(false);
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
-    // Helper component to render a single video card, used in both preview and grid
+    const filteredShorts = useMemo(() => {
+        if (activeCategory === "All") return catShorts;
+        return catShorts.filter(short => short.category === activeCategory);
+    }, [activeCategory]);
+
+    const ActiveIcon = categories.find(c => c.name === activeCategory)?.icon || Sparkles;
+
     const VideoCard = ({ short }) => {
+        const CategoryIcon = categories.find(c => c.name === short.category)?.icon || Sparkles;
         return (
             <motion.div
-                key={short.id} // Retaining key for potential list optimization, but removing for Framer trigger purposes below
+                key={short.id}
                 onClick={() => openVideo(short.youtubeId)}
                 onMouseEnter={() => setHoveredId(short.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="rounded-xl border-4 border-[#E5C082] shadow-lg overflow-hidden 
-                            transition-shadow hover:shadow-2xl cursor-pointer"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
+                className="rounded-xl border-4 border-[#E5C082] shadow-lg overflow-hidden transition-shadow hover:shadow-2xl cursor-pointer"
+                whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
             >
-                <div className="relative w-full aspect-9/16">
-                    {/* 1. Standard <img> for thumbnail */}
-                    <img
-                        src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`}
-                        alt={short.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
-                        style={{ opacity: hoveredId === short.id ? 0 : 1 }}
-                    />
-
-                    {/* 2. Muted iframe preview on hover (Seamless swap) */}
+                <div className="relative w-full aspect-9/16 bg-black">
+                    <img src={`https://img.youtube.com/vi/${short.youtubeId}/hqdefault.jpg`} alt={short.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300" style={{ opacity: hoveredId === short.id ? 0 : 1 }} />
                     {hoveredId === short.id && (
-                        <iframe
-                            // Autoplay=1, Mute=1, Loop=1 for preview
-                            src={`https://www.youtube.com/embed/${short.youtubeId}?controls=0&autoplay=1&mute=1&loop=1&playlist=${short.youtubeId}&disablekb=1&modestbranding=1`}
-                            title={short.title}
-                            frameBorder="0"
-                            className="absolute inset-0 w-full h-full pointer-events-none opacity-100 transition-opacity duration-300"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                        />
+                        <iframe src={`https://www.youtube.com/embed/${short.youtubeId}?controls=0&autoplay=1&mute=1&loop=1&playlist=${short.youtubeId}&disablekb=1&modestbranding=1`} className="absolute inset-0 w-full h-full pointer-events-none opacity-100 transition-opacity duration-300" />
                     )}
-
-                    {/* Title Overlay for Thumbnail */}
-                    <div className="absolute bottom-0 left-0 right-0 p-2 bg-linear-to-t from-black/70 to-transparent text-white z-10">
-                        <p className="text-sm font-semibold truncate">{short.title}</p>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent text-white z-10 pointer-events-none">
+                        <p className="text-sm font-semibold truncate mb-1">{short.title}</p>
+                        <div className="flex items-center gap-1.5 text-[#E5C082]">
+                            <CategoryIcon size={14} />
+                            <span className="text-[10px] uppercase font-bold tracking-widest">{short.category || 'Viral Cats'}</span>
+                        </div>
                     </div>
-                    <div className="absolute inset-0 bg-transparent z-20" aria-label={`Play ${short.title}`}></div>
+                    <div className="absolute inset-0 bg-transparent z-20"></div>
                 </div>
             </motion.div>
         );
     };
 
-    // Define the single initial animation for the entire section
-    const initialEntranceVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.05 } },
-    };
-
-    // Animation for individual items within the list/grid (optional, for subtle stagger)
-    const itemVariants = {
-        hidden: { opacity: 0, y: 10 },
-        visible: { opacity: 1, y: 0 },
-    };
-
     return (
         <section className="container mx-auto px-4 py-12">
-            <div className="mb-10">
-                <h2 className="text-3xl font-bold text-[#E5C082] mb-6 flex uppercase">
+            <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <h2 className="text-3xl font-bold text-[#E5C082] flex uppercase items-center">
                     Shorts
-                    <Image
-                        src="/Logo.png"
-                        alt="Company Logo"
-                        width={200}
-                        height={80}
-                        className="h-16 w-auto -mt-4 ml-3"
-                        loading="eager"
-                    />
+                    <Image src="/Logo.png" alt="Logo" width={120} height={50} className="h-16 w-auto ml-3 -mt-4" loading="eager" />
                 </h2>
 
-                {/* --- HEADER BUTTONS (Switch View Mode) --- */}
-                <div className="flex justify-end mb-6">
-                    <button
-                        onClick={() => setViewMode(viewMode === 'preview' ? 'grid' : 'preview')}
-                        className="flex items-center space-x-2 px-4 py-2 bg-[#E5C082] text-black font-semibold rounded-lg hover:bg-[#D4AC63] transition-colors"
-                    >
-                        {viewMode === 'preview' ? (
-                            <>
-                                <Grid size={20} />
-                                <span>View All</span>
-                            </>
-                        ) : (
-                            <>
-                                <List size={20} />
-                                <span>Collapse View</span>
-                            </>
-                        )}
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="relative z-40" ref={dropdownRef}>
+                        <button onClick={() => { setIsDropdownOpen(!isDropdownOpen); if(!isDropdownOpen) new Audio('/select-sound.mp3').play().catch(()=>{}); }} className="flex items-center gap-3 bg-black border-2 border-[#E5C082] text-[#E5C082] px-6 py-2 rounded-full font-bold min-w-[180px] justify-between transition-all hover:bg-[#E5C082]/10 shadow-lg">
+                            <span className="flex items-center gap-2"><ActiveIcon size={18} /> {activeCategory}</span>
+                            <ChevronDown size={18} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                            {isDropdownOpen && (
+                                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute top-full mt-2 left-0 w-full bg-black border-2 border-[#E5C082] rounded-2xl overflow-hidden shadow-2xl">
+                                    {categories.map((cat) => (
+                                        <button key={cat.name} onClick={() => { setActiveCategory(cat.name); setIsDropdownOpen(false); new Audio('/select-sound.mp3').play().catch(()=>{}); }} className="flex items-center gap-3 w-full px-5 py-3 text-[#E5C082] hover:bg-[#E5C082] hover:text-black transition-colors font-bold text-left"><cat.icon size={18} /> {cat.name}</button>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    <button onClick={() => setViewMode(viewMode === 'preview' ? 'grid' : 'preview')} className="flex items-center gap-2 px-5 py-2 bg-[#E5C082] text-black rounded-full font-bold hover:bg-white transition-all transform active:scale-95 shadow-lg">
+                        {viewMode === 'preview' ? <><Grid size={20} /> <span>View All</span></> : <><List size={20} /> <span>Collapse View</span></>}
                     </button>
                 </div>
-
-                {/* --- CONDITIONAL RENDERING --- */}
-
-                {viewMode === 'preview' ? (
-                    // --- 1. HORIZONTAL PREVIEW LIST (Initial Load Animation) ---
-                    <motion.div
-                        key="preview-view" // Key triggers animation restart when viewMode changes to 'preview'
-                        className="space-y-4"
-                        initial="hidden"
-                        animate="visible"
-                        variants={initialEntranceVariants}
-                    >
-                        <div
-                            // Hide scrollbar on MD+ screens (desktop), SHOW on small screens
-                            className="flex space-x-4 overflow-x-auto pb-4 flex-nowrap snap-x snap-mandatory overscroll-x-contain md:scrollbar-hide"
-                            style={{
-                                WebkitOverflowScrolling: 'touch',
-                                cursor: 'grab',
-                            }}
-                        >
-                            {/* Display only the first 6 for a quick preview */}
-                            {catShorts.slice(0, 6).map((short) => (
-                                <motion.div // Individual stagger
-                                    key={short.id}
-                                    className="shrink-0 w-1/2 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 snap-center"
-                                    variants={itemVariants}
-                                >
-                                    <VideoCard short={short} />
-                                </motion.div>
-                            ))}
-
-                            {/* --- VIEW ALL BUTTON (AT THE END OF SCROLL) --- */}
-                            <motion.div
-                                className="shrink-0 w-1/2 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 snap-center flex items-center justify-center p-4"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <button
-                                    onClick={() => setViewMode('grid')}
-                                    className="h-full w-full border-4 border-dashed border-white/50 text-white/70 rounded-xl flex flex-col items-center justify-center p-6 bg-gray-800/50"
-                                >
-                                    <Grid size={48} />
-                                    <span className="mt-3 text-lg font-bold">View All ({catShorts.length})</span>
-                                </button>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                ) : (
-                    // --- 2. RESPONSIVE GRID VIEW (View Change Animation) ---
-                    <motion.div
-                        key="grid-view" // Key triggers animation restart when viewMode changes to 'grid'
-                        className="grid gap-4"
-                        initial="hidden"
-                        animate="visible"
-                        variants={initialEntranceVariants}
-                    >
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                            {catShorts.map((short) => (
-                                <motion.div
-                                    key={short.id}
-                                    variants={itemVariants}
-                                >
-                                    <VideoCard short={short} />
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
             </div>
 
-            {/* --- Full-Screen Modal Display --- */}
+            <AnimatePresence mode="wait">
+                <motion.div key={`${activeCategory}-${viewMode}`} className={viewMode === 'preview' ? "flex space-x-4 overflow-x-auto pb-4 scrollbar-hide snap-x overscroll-contain" : "grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                    {filteredShorts.map((short) => (
+                        <div key={short.id} className={viewMode === 'preview' ? "shrink-0 w-1/2 md:w-1/4 snap-center" : ""}>
+                            <VideoCard short={short} />
+                        </div>
+                    ))}
+                    
+                    {/* --- VIEW ALL BUTTON AT END OF HORIZONTAL LIST --- */}
+                    {viewMode === 'preview' && (
+                        <div className="shrink-0 w-1/2 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 snap-center flex items-center justify-center p-4">
+                            <button 
+                                onClick={() => setViewMode('grid')}
+                                className="h-full w-full border-4 border-dashed border-white/50 text-white/70 rounded-xl flex flex-col items-center justify-center p-6 bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grid-3x3"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                                <span className="mt-3 text-lg font-bold">View All ({filteredShorts.length})</span>
+                            </button>
+                        </div>
+                    )}
+                </motion.div>
+            </AnimatePresence>
+
             <AnimatePresence>
-                {selectedVideoId && (
-                    <VideoModal
-                        shorts={catShorts}
-                        selectedId={selectedVideoId}
-                        onClose={closeVideo}
-                    />
-                )}
+                {selectedVideoId && <VideoModal shorts={filteredShorts} selectedId={selectedVideoId} onClose={closeVideo} />}
             </AnimatePresence>
         </section>
     );

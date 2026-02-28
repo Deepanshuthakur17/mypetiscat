@@ -17,6 +17,9 @@ export default function Navbar() {
         { name: "Shop", href: "/Shop" },
         { name: "About", href: "/About" },
         { name: "Contact", href: "/contact" },
+        { name: "Privacy Policy", href: "/Privacy-Policy" },
+        { name: "Disclaimer", href: "/Disclaimer" },
+        { name: "Terms & Conditions", href: "/Terms-&-Conditions" },
     ];
 
     return (

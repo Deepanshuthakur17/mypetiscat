@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { 
     X, Home, ThumbsUp, Share2, ChevronUp, ChevronDown, 
-    Grid, List, Sparkles, Heart, Laugh, Crown 
+    Grid, List, Sparkles, Heart, Laugh, Crown, 
+    Smile,
+    HeartPulse
 } from 'lucide-react';
 
 // --- STATIC DATA FOR SHORTS ---
@@ -20,15 +22,26 @@ const catShorts = [
     { id: 7, youtubeId: '4Pdou41L7jc', category: 'Rich Cats', title: 'Here The Real 👑 Queen | Royal Cat Attitude 💅🐱 | #Shorts #MyPetIsCat' },
     { id: 8, youtubeId: 'pt72uSBpvLY', category: 'Funny Cats', title: 'Coolest Cat on Earth 😎 | Too Stylish to Handle! | #Shorts #MyPetIsCat' },
     { id: 9, youtubeId: 'xUXAeCwnIM4', category: 'Rich Cats', title: 'When luxury meets cattitude 💅🐱#Shorts #MyPetIsCat' },
-    { id: 10, youtubeId: 'OcyBVPDg1BE', category: 'Rich Cats', title: '​G-WAGON Cat BOSS 💰 Drives Better Than You! 😂 #RichCat' },
+    { id: 10, youtubeId: '9s9JOMMBUKk', category: 'Cutest Cats', title: 'Cat in a Pink Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
+    { id: 11, youtubeId: 'OcyBVPDg1BE', category: 'Rich Cats', title: '​G-WAGON Cat BOSS 💰 Drives Better Than You! 😂 #RichCat' },
+    { id: 12, youtubeId: 'yAujqo9vfuk', category: 'Viral Cats', title: 'Happy Birthday to My Cat 🎂😻 | Cutest Celebration Ever! | #Shorts #MyPetIsCat' },
+    { id: 13, youtubeId: 'isr3dmvG0UE', category: 'Funny Cats', title: '😹 This Cat’s Reaction Broke the Internet! | Must Watch Funny Cat Shorts 2025' },
+    { id: 14, youtubeId: 'BX7EIlujn80', category: 'Rich Cats', title: 'SHKINI Vibes 😼💚 | Fashion Queen Entry 💎✨' },
+    { id: 15, youtubeId: 'WEbZVlkX_p0', category: 'Rich Cats', title: 'it’s pure luxury! 💸😹 | Rich Cat Attitude 😎🐈💸 #Shorts #MyPetIsCat' },
+    { id: 16, youtubeId: 'Z1gNE5wOVoQ', category: 'Cutest Cats', title: '“Golden Princess Cat ✨👑 | The Cutest Luxury Fashion Look!”' },
+    { id: 17, youtubeId: 'IWa_oLYvV3Q', category: 'Rich Cats', title: 'Richest Cat on Earth 😼💸 | Flexing in Pure Luxury ✨' },
+    { id: 18, youtubeId: 'qrK5j26vBzc', category: 'Cutest Cats', title: 'Cutest Cat Ever? 😍 You Have to See This Fluffy Baby! 🐱 #Shorts' },
+    { id: 19, youtubeId: 's0HEDmCwTdY', category: 'Cutest Cats', title: 'Cats 😂 #cat #cats #funny #funnycats #pets #animals #comedy' },
+    { id: 20, youtubeId: 'lVMkmTqrva0', category: 'Cat Care', title: 'Cat in a Pink Dress 😻 | Cutest Fashion Model Ever! | #Shorts #MyPetIsCat' },
 ];
 
 const categories = [
     { name: "All", icon: Sparkles },
     { name: "Viral Cats", icon: Heart },
     { name: "Funny Cats", icon: Laugh },
-    { name: "Cat Care", icon: List },
+    { name: "Cat Care", icon: HeartPulse },
     { name: "Rich Cats", icon: Crown },
+    { name: "Cutest Cats", icon: Smile },
 ];
 
 /**
@@ -224,7 +237,7 @@ export default function Shorts() {
                     {hoveredId === short.id && (
                         <iframe src={`https://www.youtube.com/embed/${short.youtubeId}?controls=0&autoplay=1&mute=1&loop=1&playlist=${short.youtubeId}&disablekb=1&modestbranding=1`} className="absolute inset-0 w-full h-full pointer-events-none opacity-100 transition-opacity duration-300" />
                     )}
-                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent text-white z-10 pointer-events-none">
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-linear-to-t from-black/90 to-transparent text-white z-10 pointer-events-none">
                         <p className="text-sm font-semibold truncate mb-1">{short.title}</p>
                         <div className="flex items-center gap-1.5 text-[#E5C082]">
                             <CategoryIcon size={14} />

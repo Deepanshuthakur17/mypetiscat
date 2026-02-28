@@ -172,7 +172,7 @@ export default function LongVideos() {
                     </div>
 
                     {/* --- CATEGORY SELECTOR DROPDOWN --- */}
-                    <div className="relative z-40 w-full md:w-auto" ref={dropdownRef}>
+                    <div className="relative z-40 md:w-auto" ref={dropdownRef}>
                         <button 
                             onClick={() => {
                                 setIsDropdownOpen(!isDropdownOpen);

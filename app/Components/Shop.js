@@ -145,7 +145,7 @@ export default function Shop() {
                                                 setIsDropdownOpen(false);
                                                 new Audio('/select-sound.mp3').play().catch(()=>{});
                                             }} 
-                                            className="flex items-center gap-3 w-full px-5 py-3 text-[#E5C082] hover:bg-[#E5C082] hover:text-black transition-colors font-bold text-left"
+                                            className="flex items-center gap-3 w-full justify-center px-5 py-3 text-[#E5C082] hover:bg-[#E5C082] hover:text-black transition-colors font-bold text-left"
                                         >
                                             <cat.icon size={18} /> {cat.name}
                                         </button>

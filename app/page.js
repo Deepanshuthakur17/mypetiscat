@@ -6,6 +6,7 @@ import Trending from "./Components/Trending";
 import Catweek from "./Components/Catweek";
 import Footer from "./Components/Footer";
 import Social from "./Components/Social";
+import LongVideos from "./Components/LongVideos";
 
 
 
@@ -18,6 +19,7 @@ export default function Home() {
               <Hero />
               <AdSpace />
               <Shorts/>
+              <LongVideos/>
               <Trending />
               <Catweek/>
               <AdSpace />

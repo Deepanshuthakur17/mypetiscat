@@ -36,7 +36,7 @@ const catShorts = [
 ];
 
 const categories = [
-    { name: "All", icon: Sparkles },
+    // { name: "All", icon: Sparkles },
     { name: "Viral Cats", icon: Heart },
     { name: "Funny Cats", icon: Laugh },
     { name: "Cat Care", icon: HeartPulse },
@@ -199,7 +199,7 @@ export default function Shorts() {
     const [viewMode, setViewMode] = useState('preview');
     const [selectedVideoId, setSelectedVideoId] = useState(null);
     const [hoveredId, setHoveredId] = useState(null);
-    const [activeCategory, setActiveCategory] = useState("All");
+    const [activeCategory, setActiveCategory] = useState("Viral Cats");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -215,7 +215,7 @@ export default function Shorts() {
     }, []);
 
     const filteredShorts = useMemo(() => {
-        if (activeCategory === "All") return catShorts;
+        if (activeCategory === "All Shorts") return catShorts;
         return catShorts.filter(short => short.category === activeCategory);
     }, [activeCategory]);
 
